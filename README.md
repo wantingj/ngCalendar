@@ -8,4 +8,4 @@
 
 [github repo](https://github.com/wantingj/ngCalendar) |
 [github pages](http://wantingj.github.io/ngCalendar/) |
-[投影片]
+[投影片](http://www.slideshare.net/wantingj/angular-js-45995923)
