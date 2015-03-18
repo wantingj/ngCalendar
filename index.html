@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+<body ng-app="calendarApp">
+
+<div class="site-wrapper">
+	<div class="site-wrapper-inner">
+		<div class="container" ng-controller="MonthSelector as monthSelector">
+		
+			<div class="row" ng-controller="DateDetailCtrl as dateDetailCtrl"
+				ng-init="dateDetailCtrl.setDateDetail(monthSelector.today[0], monthSelector.today[1], monthSelector.today[2])">
+				<div class="col-md-8 jumbotron calendar">
+					<div>
+						<button ng-click="monthSelector.changeMonth(-1)"
+							type="button" class="btn btn-link">
+							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						</button>
+
+						民國 {{monthSelector.year-1911}} 年 / 
+						西元 <select ng-model="monthSelector.year" ng-options="y for y in [1990,2050] | range"
+							ng-change="monthSelector.changeMonth()"></select> 年
+
+						<select ng-model="monthSelector.month" ng-options="m for m in [1,12] | range"
+							ng-change="monthSelector.changeMonth()"></select> 月
+
+						<button ng-click="monthSelector.changeMonth(1)"
+							type="button" class="btn btn-link">
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						</button>
+					</div>
+					<!-- ------------------------------------------------------------ -->
+					<div class="month-day">
+
+						<div class="week-title">
+							<div>日</div>
+							<div>一</div>
+							<div>二</div>
+							<div>三</div>
+							<div>四</div>
+							<div>五</div>
+							<div>六</div>
+						</div>
+
+						<div class="days">
+							<div ng-repeat="day in monthSelector.preMonthDaysRange | range"
+								ng-mouseover="dateDetailCtrl.onDateHover(monthSelector.year, monthSelector.month-1, day)"
+								ng-click="dateDetailCtrl.onDateClick()"	class="other-month">{{day}}</div>
+							<div ng-repeat="day in monthSelector.thisMonthDaysRange | range"
+								ng-mouseover="dateDetailCtrl.onDateHover(monthSelector.year, monthSelector.month, day)"
+								ng-click="dateDetailCtrl.onDateClick()">{{day}}</div>
+							<div ng-repeat="day in monthSelector.nextMonthDaysRange | range"
+								ng-mouseover="dateDetailCtrl.onDateHover(monthSelector.year, monthSelector.month+1, day)"
+								ng-click="dateDetailCtrl.onDateClick()"	class="other-month">{{day}}</div>
+						</div>
+
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="col-md-4 jumbotron date-detail" ng-class="{pinned:dateDetailCtrl.pinDetailPannel}">
+					<button type="button" class="close" ng-show="dateDetailCtrl.pinDetailPannel"
+					ng-click="dateDetailCtrl.onPannelCloseBtnClick()">×</button>
+					<h5>民國 {{dateDetailCtrl.twYear}} 年 / 西元 {{dateDetailCtrl.year}} 年</h5>
+					<h3>{{dateDetailCtrl.month}} 月 {{dateDetailCtrl.day}} 日</h3>
+					<p>{{dateDetailCtrl.weekDay}}</p>
+					<p>{{dateDetailCtrl.horoscope}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	<script src="js/calendarApp.js"></script>
+</body>
+</html>
